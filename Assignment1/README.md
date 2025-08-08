@@ -2,10 +2,6 @@
 
 This repository contains the Jupyter Notebook for the first assignment of the "Engineering of Data Analysis" course. The project involves analyzing the large-scale NYC Taxi dataset from the ACM DEBS 2015 Grand Challenge, with a focus on comparing the performance and implementation styles of different data processing and machine learning frameworks.
 
-**Authors:**
-- **Student num:** `TBC` **; Name:** `TBC`
-- **Student num:** `TBC` **; Name:** `TBC`
-
 ## Overview
 
 - **Goal:** To implement and evaluate solutions for a series of data analysis and machine learning tasks using various high-performance computing frameworks. The core objective is to compare the runtimes and methodologies of Pandas, Spark (SQL and Pandas API), and NVIDIA RAPIDS (cuDF and cuML).
