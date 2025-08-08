@@ -1,59 +1,77 @@
 # Engineering of Data Analysis: Assignment 1
 
-This repository contains the solution for the first assignment in the "Engineering of Data Analysis" course, developed by the students listed below. The project focuses on processing and analyzing a large-scale dataset using distributed computing with Apache Spark.
+This repository contains the Jupyter Notebook for the first assignment of the "Engineering of Data Analysis" course. The project involves analyzing the large-scale NYC Taxi dataset from the ACM DEBS 2015 Grand Challenge, with a focus on comparing the performance and implementation styles of different data processing and machine learning frameworks.
+
+**Authors:**
+- **Student num:** `TBC` **; Name:** `TBC`
+- **Student num:** `TBC` **; Name:** `TBC`
 
 ## Overview
 
--   **Goal:** The primary objective of this assignment is to implement a scalable data processing solution to answer a series of analytical queries on a large trip dataset. The project demonstrates proficiency in using Apache Spark for data ingestion, transformation, and analysis.
--   **Assignment Context:** The analysis is based on the **ACM DEBS 2015 Grand Challenge**, which involves real-time analysis of New York City taxi trip records. This project provides batch-processing solutions to the challenge questions using Spark's powerful distributed computing capabilities.
+- **Goal:** To implement and evaluate solutions for a series of data analysis and machine learning tasks using various high-performance computing frameworks. The core objective is to compare the runtimes and methodologies of Pandas, Spark (SQL and Pandas API), and NVIDIA RAPIDS (cuDF and cuML).
+- **Assignment Context:** The project leverages the well-known ACM DEBS 2015 Grand Challenge dataset. It addresses practical questions such as calculating driver earnings, identifying popular routes, and optimizing taxi rank locations through clustering.
 
-## Main Data Features
+## Key Analyses & Exercises
 
-The dataset consists of records representing taxi trips in New York City. The key features of the data include:
+The assignment is structured around four main exercises, each designed to test different aspects of data engineering and analysis:
 
-| Feature                   | Description                                                 |
-| ------------------------- | ----------------------------------------------------------- |
-| medallion                 | An anonymized license identifier for the taxi.              |
-| hack_license              | An anonymized license identifier for the driver.            |
-| pickup_datetime           | Timestamp for the start of the trip.                        |
-| dropoff_datetime          | Timestamp for the end of the trip.                          |
-| trip_time_in_secs         | The total duration of the trip in seconds.                  |
-| trip_distance             | The distance of the trip in miles.                          |
-| pickup_longitude / latitude | Geographic coordinates for the pickup location.             |
-| dropoff_longitude / latitude| Geographic coordinates for the dropoff location.            |
-| payment_type              | The method of payment (e.g., cash, credit card).            |
-| fare_amount               | The base fare for the trip.                                 |
-| total_amount              | The total amount paid, including tolls and surcharges.      |
+1.  **Simple Aggregations:** Compute the total earnings for each taxi driver. This task is used as a benchmark to compare the raw performance of:
+    -   Pandas (single-core, in-memory)
+    -   Spark Pandas API (distributed)
+    -   Spark SQL (distributed)
+    -   cuDF (GPU-accelerated)
 
-## Workflow & Analysis
+2.  **UDF Performance Analysis:** Measure and contrast the performance of a Spark SQL query that uses a native Python User-Defined Function (UDF) against an equivalent query written using only standard Spark SQL functions. This demonstrates the performance overhead associated with UDFs.
 
-The core of this assignment is implemented in the Jupyter Notebook, following a structured workflow:
+3.  **Frequent Route Identification:** Find the 20 most frequent taxi routes with a trip distance above a defined threshold. The solution involves creating a spatial grid to group pickup and dropoff locations and is implemented using both Spark SQL and the Spark Pandas API.
 
-1.  **Environment Setup:** Initialize a Spark session and configure the environment for distributed data processing, potentially within a cloud environment like Google Colab with GPU acceleration.
-2.  **Data Loading:** Ingest the large taxi trip dataset (in formats like CSV or Parquet) into a Spark DataFrame.
-3.  **Data Cleaning & Transformation:** Perform necessary data cleaning, such as handling null values, correcting data types, and parsing timestamps. New features, like trip duration or speed, may be engineered to support the analysis.
-4.  **Query Implementation:** Address the specific analytical questions from the assignment using Spark SQL and DataFrame API operations. This includes performing complex aggregations, joins, and window functions to derive insights.
-5.  **Results Presentation:** The results for each query are calculated and presented directly within the notebook, showcasing the final output of the analysis.
+4.  **Taxi Rank Placement with Clustering:** Use K-Means clustering to identify optimal locations for taxi ranks based on pickup density. This exercise compares the performance and implementation of three different machine learning libraries:
+    -   scikit-learn (traditional CPU-based)
+    -   cuML (GPU-accelerated)
+    -   Spark MLlib (distributed)
 
 ## Technology Stack
 
-| Component               | Technology / Tool                                         | Purpose                                                     |
-| ----------------------- | --------------------------------------------------------- | ----------------------------------------------------------- |
-| **Core Processing Engine**| Apache Spark                                            | For distributed data processing, transformations, and analytics. |
-| **Language & API**      | Python, PySpark                                           | The primary language and library for interacting with Spark. |
-| **Development Environment**| Jupyter Notebook / Google Colab                         | An interactive environment for developing and documenting the analysis. |
-| **Machine Learning (Optional)** | Spark MLlib                                       | Used for any predictive modeling or machine learning tasks. |
+This project utilizes a range of tools to compare different data processing paradigms. The entire analysis is conducted within a Google Colab environment with GPU acceleration enabled.
+
+| Component                 | Technology / Library                                      | Purpose                                                                |
+| ------------------------- | --------------------------------------------------------- | ---------------------------------------------------------------------- |
+| **Core Processing**       | Apache Spark, Pandas                                      | Foundational engines for distributed and single-core data processing.  |
+| **APIs & Languages**      | Python, PySpark, Spark SQL, Pandas API on Spark           | For writing data transformations and analytical queries.               |
+| **GPU Acceleration**      | NVIDIA RAPIDS (cuDF, cuML)                                | For high-performance, GPU-accelerated data manipulation and ML.        |
+| **Machine Learning**      | Spark MLlib, cuML, Scikit-learn                           | For implementing K-Means clustering across different frameworks.       |
+| **Development Environment** | Google Colab, Jupyter Notebook                            | Interactive environment with free access to GPU hardware.              |
+| **Data Visualization**    | Matplotlib                                                | For plotting heatmaps and scatter plots to visualize results.          |
 
 ## Data Source
 
-The data for this assignment is from the **ACM DEBS 2015 Grand Challenge**, which focuses on real-time event processing for large data streams. The dataset contains details of over 1.5 billion taxi trips in New York City during 2013.
+The dataset is from the **ACM DEBS 2015 Grand Challenge**, containing taxi trip records from New York City. The data is provided in different sizes (`tiny`, `sample`, `full`) to allow for scalable testing and development.
 
--   **Source:** [ACM DEBS 2015 Grand Challenge Website](http://www.debs2015.org/call-grand-challenge.html)
--   **Citation:** The data is a publicly available dataset commonly used for big data processing benchmarks and academic exercises.
+-   **Source Link:** The data is hosted on Google Drive and accessed via a mounted drive in the Colab environment.
+-   **Schema:** Key fields include pickup/dropoff times and coordinates, trip duration, distance, and fare details.
 
-## Results
+## Setup and Execution
 
-The Jupyter notebook provides the complete code, step-by-step transformations, and final answers for each of the analytical questions posed in the assignment. The solutions demonstrate the efficient use of Spark to query and extract meaningful information from a large-scale, real-world dataset.
+To run this analysis, open the `EoDA_2425_assignment1.ipynb` notebook in a Google Colab environment.
+
+**Prerequisites:**
+- A Google account with access to Google Drive.
+- In Colab, set the hardware accelerator to **GPU** (`Edit > Notebook settings > T4 GPU`).
+
+The notebook handles its own setup by running installation scripts for all required dependencies, including:
+- `pyspark`
+- `gdown` for file handling
+- `rapidsai-csp-utils` for installing RAPIDS libraries (cuDF, cuML)
+
+The notebook is designed to be executed cell-by-cell. The `FILENAME` variable can be adjusted to switch between the tiny, sample, and full datasets for performance comparisons.
+
+## Results and Discussion
+
+The results, including performance timings, code outputs, and visualizations, are documented within the Jupyter Notebook under each exercise. A detailed discussion follows each exercise, explaining the code's rationale and analyzing the performance differences observed between the tested frameworks.
+
+---
+
+_For all code, detailed implementation, and query results, please see the main Jupyter Notebook file in this repository._
 
 ---
 
