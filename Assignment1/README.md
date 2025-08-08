@@ -69,9 +69,7 @@ The results, including performance timings, code outputs, and visualizations, ar
 
 _For all code, detailed implementation, and query results, please see the main Jupyter Notebook file in this repository._
 
----
 
-_For all code, detailed implementation, and query results, please see the main Jupyter Notebook file in this repository._
 
 
 
